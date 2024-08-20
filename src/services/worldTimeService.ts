@@ -6,5 +6,5 @@ import { City } from "../interfaces/city";
  * @returns a promise of an array of cities that matches their names with the search string
  */
 export function getWorldTime(searchString: string): Promise<City[]> {
-    throw new Error("Not implemented");
+  throw new Error("Not implemented");
 }
