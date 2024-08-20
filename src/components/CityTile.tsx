@@ -1,4 +1,5 @@
 import { HomeIcon, TrashIcon } from '@heroicons/react/20/solid';
+import CityTimeRange from './CityTimeRange';
 
 function CityTile() {
   return (
@@ -18,8 +19,7 @@ function CityTile() {
           <h4 className='font-semibold'>7:30am BST</h4>
           <p>Fri, May 1</p>
         </div>
-        <div className='w-4/5 h-12 bg-teal-200'>
-        </div>
+        <CityTimeRange />
       </div>
     </div>
   )
