@@ -1,4 +1,9 @@
 export type TimeZone = {
+  hour_string: string;
+  hour_24: number;
+  week_day_name: string;
+  month_name: string;
+  date: string;
   utc_offset: string;
   timezone: string;
   day_of_week: number;
