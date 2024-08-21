@@ -1,10 +1,15 @@
-import { HomeIcon, TrashIcon } from '@heroicons/react/20/solid';
+import { ArrowPathIcon, HomeIcon, TrashIcon } from '@heroicons/react/20/solid';
 import CityTimeRange from './CityTimeRange';
 import { City } from '../types/city'
 import { useRemoveCity } from '../hooks/useRemoveCity';
+import { useSearchTimeZone } from '../hooks/useSearchTimeZone';
+
+const dayNames = ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Satur']
+const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 
 function CityTile({ city }: { city: City }) {
   const removeCity = useRemoveCity()
+  const { time, searching } = useSearchTimeZone(city.timezone)
 
   return (
     <div className='flex gap-4 items-center'>
@@ -20,13 +25,21 @@ function CityTile({ city }: { city: City }) {
       </div>
       <div className='flex w-full justify-end gap-4'>
         <div>
-          <h4 className='font-semibold'>7:30am BST</h4>
-          <p>Fri, May 1</p>
+          {time && !searching ? <>
+            <h4 className='font-semibold'>{time.datetime.getHours()}:{time.datetime.getMinutes()} {getAbbreviation()}</h4>
+            <p>{dayNames[time.datetime.getDay()]}, {monthNames[time.datetime.getMonth()]} {time.datetime.getDate()}</p>
+          </> : <ArrowPathIcon className='animate-spin h-5 w-5 mx-auto text-slate-600'></ArrowPathIcon>}
         </div>
         <CityTimeRange />
       </div>
     </div>
   )
+
+  function getAbbreviation() {
+    if (time && (/^[a-zA-Z]+$/).test(time.abbreviation)) {
+      return time.abbreviation
+    } else return time ? 'GMT' + time.abbreviation : 'unknown'
+  }
 }
 
 export default CityTile

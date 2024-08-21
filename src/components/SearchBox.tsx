@@ -25,8 +25,8 @@ function SearchBox() {
     </div>
   )
 
-  async function handleSearch(value: string) {
-    await searchCities(value)
+  function handleSearch(value: string) {
+    searchCities(value)
   }
 }
 

@@ -1,4 +1,4 @@
-export type Timezone = {
+export type TimeZone = {
   utc_offset: string;
   timezone: string;
   day_of_week: number;
