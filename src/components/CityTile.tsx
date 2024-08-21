@@ -3,21 +3,25 @@ import CityTimeRange from './CityTimeRange';
 import { City } from '../types/city'
 import { useRemoveCity } from '../hooks/useRemoveCity';
 import { useSearchTimeZone } from '../hooks/useSearchTimeZone';
+import { useSetHome } from '../hooks/useSetHome';
 
 const dayNames = ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Satur']
 const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 
 function CityTile({ city }: { city: City }) {
   const removeCity = useRemoveCity()
+  const setHome = useSetHome()
   const { time, searching } = useSearchTimeZone(city.timezone)
 
   return (
     <div className='flex gap-4 items-center'>
       <div className='min-w-72 auto flex items-center gap-4'>
         <TrashIcon onClick={() => removeCity(city)} className='w-6 h-6 text-gray-700' />
-        <div className='w-12 h-12 rounded-full relative bg-slate-100'>
-          <HomeIcon className='w-5 h-5 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-gray-700' />
-        </div>
+        <button onClick={!city.isHome ? () => setHome(city) : undefined} className='w-12 h-12 rounded-full relative bg-slate-100'>
+          {city.isHome ?
+            <HomeIcon className='w-5 h-5 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-gray-700' />
+            : <h4 className='font-semibold absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2'>-10</h4>}
+        </button>
         <div>
           <h4 className='font-semibold'>{city.city}</h4>
           <p>{city.country}</p>

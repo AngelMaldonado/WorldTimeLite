@@ -4,18 +4,27 @@ import { City } from "../types/city"
 
 function WorldTimeLiteProvider({ children }: { children: ReactNode }) {
   const [context, setContext] = useState<WorldTimeContextType>({
-    homeCity: undefined,
     addedCities: [],
   })
 
   const setHomeCity = (city: City) => {
+    const addedCities = context.addedCities
+    const previousHome = addedCities.filter((c) => c.isHome)[0]
+
+    addedCities.splice(addedCities.indexOf(previousHome), 1, { ...previousHome, isHome: false })
+    addedCities.splice(addedCities.indexOf(city), 1, { ...city, isHome: true })
+
     setContext({
       ...context,
-      homeCity: { ...city, isHome: true },
+      addedCities: addedCities,
     })
   }
 
   const addCity = (city: City) => {
+    if (context.addedCities.length == 0) {
+      city.isHome = true
+    }
+
     setContext({
       ...context,
       addedCities: [...context.addedCities, city],
