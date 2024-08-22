@@ -14,8 +14,8 @@ function CityTile({ city }: { city: City }) {
   const { time, searching } = useSearchTimeZone(city.timezone)
 
   return (
-    <div className='flex gap-4 items-center'>
-      <div className='min-w-72 auto flex items-center gap-4'>
+    <div className='flex gap-4 items-center justify-between'>
+      <div className='min-w-72 max-w-72 flex items-center gap-2'>
         <TrashIcon onClick={() => removeCity(city)} className='w-6 h-6 text-gray-700' />
         <button onClick={!city.isHome ? () => setHome(city) : undefined} className='w-12 h-12 rounded-full relative bg-slate-100'>
           {city.isHome ?
@@ -29,17 +29,17 @@ function CityTile({ city }: { city: City }) {
           <p>{city.country}</p>
         </div>
       </div>
-      <div className='flex w-full justify-end gap-4'>
-        {time && !searching && homeHour != undefined ? (
-          <>
-            <div>
-              <h4 className='font-semibold'>{time.hour_string} {getAbbreviation()}</h4>
-              <p>{time.week_day_name}, {time.month_name}</p>
-            </div>
-            <CityTimeRange start={time} />
-          </>
-        ) : <ArrowPathIcon className='animate-spin h-5 w-5 mx-auto text-slate-600'></ArrowPathIcon>}
-      </div>
+      {time && !searching && homeHour != undefined ? (
+        <>
+          <div className='min-w-[9rem]'>
+            <h4 className='font-semibold text-nowrap'>{time.hour_string} {getAbbreviation()}</h4>
+            <p>{time.week_day_name}, {time.month_name}</p>
+          </div>
+          <CityTimeRange start={time} />
+        </>
+      ) : <ArrowPathIcon className='animate-spin h-5 w-5 mx-auto text-slate-600'></ArrowPathIcon>}
+      {/* <div className='flex justify-end items-center'>
+      </div> */}
     </div >
   )
 
@@ -59,17 +59,9 @@ function CityTile({ city }: { city: City }) {
   */
 
   function getHourDifferenceString() {
-    const difference = getHourDifference()
-    if (difference) {
-      return difference > 0 ? `+${difference}` : difference.toString()
-    } else {
-      return '+0'
-    }
-  }
-
-  function getHourDifference() {
     if (time != undefined && homeHour != undefined) {
-      return homeHour - time.hour_24
+      const difference = Math.abs(homeHour - time.hour_24)
+      return time.hour_24 >= homeHour ? `+${difference}` : `-${difference}`
     }
   }
 

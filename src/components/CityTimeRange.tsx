@@ -13,7 +13,7 @@ export default function CityTimeRange({ start }: { start: TimeZone }) {
 
   return (
     <>
-      <ul className='h-max flex'>
+      <ul className='w-[45rem] min-w-[45rem] max-w-[45rem] h-max flex'>
         {hoursToRender.map(time => {
           if ((hourIsBetween(6, 7, time.hour) && time.am_pm == 'am') || (hourIsBetween(6, 8, time.hour) && time.am_pm == 'pm')) {
             return specialTile(time.hour, time.am_pm)
@@ -32,7 +32,7 @@ export default function CityTimeRange({ start }: { start: TimeZone }) {
 
   function normalTile(hour: number, am_pm: string) {
     return (
-      <li className='p-2 text-center bg-slate-100'>
+      <li key={hour + am_pm} className='p-2 text-center bg-slate-100'>
         <h4 className='font-semibold'>{hour}</h4>
         <p className='text-xs'>{am_pm}</p>
       </li>
@@ -41,7 +41,7 @@ export default function CityTimeRange({ start }: { start: TimeZone }) {
 
   function specialTile(hour: number, am_pm: string) {
     return (
-      <li className='p-2 text-center bg-blue-100'>
+      <li key={hour + am_pm} className='p-2 text-center bg-blue-100'>
         <h4 className='font-semibold'>{hour}</h4>
         <p className='text-xs'>{am_pm}</p>
       </li>
@@ -50,8 +50,8 @@ export default function CityTimeRange({ start }: { start: TimeZone }) {
 
   function darkTile(hour: number, am_pm: string, month: string, day: number) {
     return (
-      <li className={'p-2 text-center bg-blue-950 text-white' + (hour == 11 && am_pm == 'pm' ? ' rounded-e-xl' : (hour == 0) ? ' ms-2 rounded-s-xl' : '')}>
-        <h4 className='font-semibold'>{hour != 0 ? hour : month}</h4>
+      <li key={hour + am_pm} className={'p-2 text-center bg-blue-950 text-white' + (hour == 11 && am_pm == 'pm' ? ' rounded-e-xl' : (hour == 0) ? ' ms-2 rounded-s-xl' : '')}>
+        <h4 className={'font-semibold' + (hour == 0 ? ' text-xs py-1' : '')}>{hour != 0 ? hour : month}</h4>
         <p className='text-xs'>{hour != 0 ? am_pm : day}</p>
       </li>
     )
