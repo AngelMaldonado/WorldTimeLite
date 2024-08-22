@@ -5,11 +5,12 @@ import { useRemoveCity } from '../hooks/useRemoveCity';
 import { useSearchTimeZone } from '../hooks/useSearchTimeZone';
 import { useSetHome } from '../hooks/useSetHome';
 import { useGetHome } from '../hooks/useGetHome';
+import { TimeZone } from '../types/timezone';
 
 function CityTile({ city }: { city: City }) {
   const removeCity = useRemoveCity()
   const setHome = useSetHome()
-  const home = useGetHome()
+  const { homeHour } = useGetHome()
   const { time, searching } = useSearchTimeZone(city.timezone)
 
   return (
@@ -20,7 +21,7 @@ function CityTile({ city }: { city: City }) {
           {city.isHome ?
             <HomeIcon className='w-5 h-5 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-gray-700' />
             : <h4 className='font-semibold absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2'>
-              {getHourDifference()}
+              {getHourDifferenceString()}
             </h4>}
         </button>
         <div>
@@ -29,24 +30,46 @@ function CityTile({ city }: { city: City }) {
         </div>
       </div>
       <div className='flex w-full justify-end gap-4'>
-        <div>
-          {time && !searching ? <>
-            <h4 className='font-semibold'>{time.hour_string} {getAbbreviation()}</h4>
-            <p>{time.week_day_name}, {time.month_name}</p>
-          </> : <ArrowPathIcon className='animate-spin h-5 w-5 mx-auto text-slate-600'></ArrowPathIcon>}
-        </div>
-        <CityTimeRange />
+        {time && !searching && homeHour != undefined ? (
+          <>
+            <div>
+              <h4 className='font-semibold'>{time.hour_string} {getAbbreviation()}</h4>
+              <p>{time.week_day_name}, {time.month_name}</p>
+            </div>
+            <CityTimeRange start={time} />
+          </>
+        ) : <ArrowPathIcon className='animate-spin h-5 w-5 mx-auto text-slate-600'></ArrowPathIcon>}
       </div>
-    </div>
+    </div >
   )
 
-  function getHourDifference() {
-    const homeHour = parseInt(new Date().toLocaleDateString('en-US', { timeZone: home?.timezone, hour: 'numeric', hour12: false }))
-    if (time) {
-      const difference = homeHour - time.hour_24
+  /* TODO: esta función puede necesitarse para calcular los desplazamientos de tiempo para el TimeRange component
+  function getStartDateForRange(time: TimeZone) {
+    if (!city.isHome) {
+      const current = new Date(time.year, time.month, time.month_day, time.hour_24)
+      const difference = getHourDifference()
+      if (difference) {
+        current.setHours(current.getHours() + difference)
+      }
+      return current
+    } else {
+      return
+    }
+  }
+  */
+
+  function getHourDifferenceString() {
+    const difference = getHourDifference()
+    if (difference) {
       return difference > 0 ? `+${difference}` : difference.toString()
     } else {
       return '+0'
+    }
+  }
+
+  function getHourDifference() {
+    if (time != undefined && homeHour != undefined) {
+      return homeHour - time.hour_24
     }
   }
 
