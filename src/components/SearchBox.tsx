@@ -7,7 +7,7 @@ function SearchBox() {
   const addCity = useAddCity()
 
   return (
-    <div className='absolute z-10'>
+    <div className='absolute z-20'>
       <input onChange={e => handleSearch(e.target.value)}
         className='w-96 px-4 py-2 bg-slate-100 rounded-full'
         type='text'

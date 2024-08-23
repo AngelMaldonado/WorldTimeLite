@@ -5,7 +5,6 @@ import { useRemoveCity } from '../hooks/useRemoveCity';
 import { useSearchTimeZone } from '../hooks/useSearchTimeZone';
 import { useSetHome } from '../hooks/useSetHome';
 import { useGetHome } from '../hooks/useGetHome';
-import { TimeZone } from '../types/timezone';
 
 function CityTile({ city }: { city: City }) {
   const removeCity = useRemoveCity()
@@ -35,11 +34,9 @@ function CityTile({ city }: { city: City }) {
             <h4 className='font-semibold text-nowrap'>{time.hour_string} {getAbbreviation()}</h4>
             <p>{time.week_day_name}, {time.month_name}</p>
           </div>
-          <CityTimeRange start={time} />
+          <CityTimeRange start={time} isHome={city.isHome} />
         </>
       ) : <ArrowPathIcon className='animate-spin h-5 w-5 mx-auto text-slate-600'></ArrowPathIcon>}
-      {/* <div className='flex justify-end items-center'>
-      </div> */}
     </div >
   )
 

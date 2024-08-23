@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --tracker-after-offset: 0;
+}
+
 body {
   background-color: #F49C76;
 }
@@ -28,4 +32,20 @@ body {
   background: transparent;
   margin: 40px 0;
   border-radius: 40px;
+}
+
+.hover-area {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  /* trash-home-city + time + trackwidth*2 */
+  left: calc(18rem + 9rem + 4.0625rem);
+}
+
+.tracker {
+  border: 3px solid #ff4d00;
+  background-color: #F49C76;
+  opacity: .4;
+  left: calc(18rem + 9rem + 4.0625rem);
 }

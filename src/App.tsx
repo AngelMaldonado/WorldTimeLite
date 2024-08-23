@@ -1,5 +1,6 @@
 import './App.css'
 import CitiesContainer from './components/CitiesContainer'
+import TrackerProvider from './providers/TrackerProvider'
 import WorldTimeLiteProvider from './providers/WorldTimeLiteProvider'
 
 function App() {
@@ -9,7 +10,9 @@ function App() {
         <header>
           <h1 className='text-6xl font-medium text-white'>Worldtime Lite</h1>
         </header>
-        <CitiesContainer />
+        <TrackerProvider>
+          <CitiesContainer />
+        </TrackerProvider>
       </main>
     </WorldTimeLiteProvider>
   )
