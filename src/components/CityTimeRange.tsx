@@ -1,7 +1,7 @@
 import { ChevronRightIcon } from "@heroicons/react/20/solid";
 import { TimeZone } from "../types/timezone";
 import { useGetTrackerContext } from "../hooks/useGetTrackerContext";
-import { MouseEventHandler, useEffect } from "react";
+import { useEffect } from "react";
 
 type HourRangeTile = {
   hour: number,
@@ -18,7 +18,7 @@ export default function CityTimeRange({ start, isHome }: { start: TimeZone, isHo
     const handleMouse = (e: MouseEvent) => {
       const offsetX = e.offsetX
       if (trackerRef && trackerRef.current) {
-        const left = `${hoverAreaRef.current!.offsetLeft + offsetX}px`
+        const left = `${hoverAreaRef.current!.offsetLeft + offsetX - (trackerRef.current.offsetWidth / 2)}px`
         trackerRef.current.animate({ left }, { duration: 200, fill: 'forwards' })
       }
     }

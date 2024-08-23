@@ -38,7 +38,7 @@ body {
   position: absolute;
   top: 0;
   height: 100%;
-  width: 100%;
+  width: 55%;
   /* trash-home-city + time + trackwidth*2 */
   left: calc(18rem + 9rem + 4.0625rem);
 }
