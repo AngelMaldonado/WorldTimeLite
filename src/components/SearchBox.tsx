@@ -2,7 +2,7 @@ import { ArrowPathIcon } from "@heroicons/react/20/solid"
 import { useAddCity } from "../hooks/useAddCity"
 import { useSearchCities } from "../hooks/useSearchCities"
 import { useAddedCities } from "../hooks/useAddedCities"
-import { useState } from "react"
+import { useRef, useState } from "react"
 import { City } from "../types/city"
 
 function SearchBox() {
@@ -11,16 +11,34 @@ function SearchBox() {
   const addCity = useAddCity()
   const [open, setOpen] = useState(false)
   const [searchStr, setSearchStr] = useState('')
+  const searchBoxRef = useRef<HTMLDivElement | null>(null)
+
+  window.addEventListener('click', (e) => {
+    const mousex = e.clientX
+    const mousey = e.clientX
+    const { x, y, width, height } = searchBoxRef.current?.getBoundingClientRect()
+
+    if (mousex > x + width) {
+      setOpen(false)
+    } else if (mousex < x) {
+      setOpen(false)
+    } else if (mousey > y) {
+      setOpen(false)
+    } else if (mousey < y + height) {
+      setOpen(false)
+    }
+  })
 
   return (
-    <div className='absolute z-20'>
-      <input value={searchStr} onChange={e => {
-        setSearchStr(e.target.value)
-        handleSearch(e.target.value)
+    <div ref={searchBoxRef} className='absolute z-20'>
+      <input value={searchStr}
+        onChange={e => {
+          setSearchStr(e.target.value)
+          handleSearch(e.target.value)
 
-        if (e.target.value != "")
-          setOpen(true)
-      }}
+          if (e.target.value != "")
+            setOpen(true)
+        }}
         className='w-96 px-4 py-2 bg-slate-100 rounded-full'
         type='text'
         placeholder='Find place or timezone - Press ↲ (Enter)'
