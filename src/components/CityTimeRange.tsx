@@ -1,7 +1,6 @@
 import { ChevronRightIcon } from "@heroicons/react/20/solid";
 import { TimeZone } from "../types/timezone";
 import { useGetTrackerContext } from "../hooks/useGetTrackerContext";
-import { useEffect } from "react";
 
 type HourRangeTile = {
   hour: number,
@@ -12,24 +11,7 @@ type HourRangeTile = {
 
 export default function CityTimeRange({ start, isHome }: { start: TimeZone, isHome: boolean }) {
   const hoursToRender = generateHoursArray(start)
-  const { firstTimeTileRef, lastTimeTileRef, trackerRef, hoverAreaRef } = useGetTrackerContext()
-
-  useEffect(() => {
-    const handleMouse = (e: MouseEvent) => {
-      const offsetX = e.offsetX
-      if (trackerRef && trackerRef.current) {
-        const left = `${hoverAreaRef.current!.offsetLeft + offsetX - (trackerRef.current.offsetWidth / 2)}px`
-        trackerRef.current.animate({ left }, { duration: 200, fill: 'forwards' })
-      }
-    }
-
-    if (firstTimeTileRef.current && trackerRef.current && hoverAreaRef.current) {
-      // Move tracker to the first time tile offset tacking into account the tracker width
-      trackerRef.current.style.opacity = '.5'
-      trackerRef.current.style.left = hoverAreaRef.current.offsetLeft + 'px'
-      hoverAreaRef.current.addEventListener('mousemove', handleMouse)
-    }
-  }, [])
+  const { firstTimeTileRef, lastTimeTileRef } = useGetTrackerContext()
 
   return (
     <>

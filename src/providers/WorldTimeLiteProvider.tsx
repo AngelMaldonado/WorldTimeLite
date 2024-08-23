@@ -3,7 +3,7 @@ import { WorldTimeContextType, WorldTimeLiteContext } from "./context"
 import { City } from "../types/city"
 
 function WorldTimeLiteProvider({ children }: { children: ReactNode }) {
-  const storageContext = JSON.parse(localStorage.getItem('context') ?? '{}')
+  const storageContext = JSON.parse(localStorage.getItem('context') ?? '{"addedCities": []}')
 
   const [context, setContext] = useState<WorldTimeContextType>(storageContext)
 

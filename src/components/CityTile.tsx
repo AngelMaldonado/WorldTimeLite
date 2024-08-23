@@ -15,10 +15,10 @@ function CityTile({ city }: { city: City }) {
   return (
     <div className='flex gap-4 items-center justify-between'>
       <div className='min-w-72 max-w-72 flex items-center gap-2'>
-        <TrashIcon onClick={() => removeCity(city)} className='w-6 h-6 text-gray-700' />
-        <button onClick={!city.isHome ? () => setHome(city) : undefined} className='w-12 h-12 rounded-full relative bg-slate-100'>
+        <TrashIcon onClick={() => removeCity(city)} className='w-6 min-w-6 h-6 cursor-pointer text-gray-700 hover:text-red-500 transition-colors' />
+        <button onClick={!city.isHome ? () => setHome(city) : undefined} className='w-12 min-w-12 h-12 rounded-full relative bg-slate-100 text-gray-700 hover:bg-blue-900 hover:text-white transition-colors'>
           {city.isHome ?
-            <HomeIcon className='w-5 h-5 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-gray-700' />
+            <HomeIcon className='w-5 h-5 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2' />
             : <h4 className='font-semibold absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2'>
               {getHourDifferenceString()}
             </h4>}
