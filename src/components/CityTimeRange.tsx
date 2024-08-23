@@ -28,9 +28,6 @@ export default function CityTimeRange({ start, isHome }: { start: TimeZone, isHo
       trackerRef.current.style.opacity = '.5'
       trackerRef.current.style.left = hoverAreaRef.current.offsetLeft + 'px'
       hoverAreaRef.current.addEventListener('mousemove', handleMouse)
-      return () => {
-        firstTimeTileRef.current!.removeEventListener('mousemove', handleMouse)
-      }
     }
   }, [])
 
