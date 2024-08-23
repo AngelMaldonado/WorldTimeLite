@@ -10,15 +10,16 @@ function SearchBox() {
   const addedCities = useAddedCities()
   const addCity = useAddCity()
   const [open, setOpen] = useState(false)
+  const [searchStr, setSearchStr] = useState('')
 
   return (
     <div className='absolute z-20'>
-      <input onBlur={() => setOpen(false)} onChange={e => {
+      <input value={searchStr} onChange={e => {
+        setSearchStr(e.target.value)
         handleSearch(e.target.value)
+
         if (e.target.value != "")
           setOpen(true)
-        else
-          setOpen(false)
       }}
         className='w-96 px-4 py-2 bg-slate-100 rounded-full'
         type='text'
@@ -40,6 +41,7 @@ function SearchBox() {
   function handleAdd(city: City) {
     addCity(city)
     setOpen(false)
+    setSearchStr('')
   }
 
   function handleSearch(value: string) {
